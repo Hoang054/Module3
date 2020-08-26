@@ -1,0 +1,137 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "User page";
+    var provinces = ViewBag.Provinces as IEnumerable<Province>;
+    var districts = ViewBag.Districts as IEnumerable<District>;
+    var wards = ViewBag.Wards as IEnumerable<Ward>;
+}
+
+
+<form enctype="multipart/form-data" asp-controller="User" asp-action="Create" method="post" class="mt-2">
+    <div>
+        <h1 class="display-4">Đăng Kí Tài Khoản</h1>
+        <h2>Thông Tin Cá Nhân</h2>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="FullName"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="numberPhone"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="numberPhone" class="form-control" />
+                <span asp-validation-for="numberPhone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Email"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <h2>Mật Khẩu của bạn</h2>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Password"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="ConfirmPassword"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <h2>Thông tin địa chỉ</h2>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="idProvince"></label>
+            </div>
+            <select asp-for="idProvince" onclick="getDistrictById(this.value)">
+                <option>Chọn Tỉnh/ Thành Phố</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="idDistrict"></label>
+            </div>
+            <select asp-for="idDistrict" onclick="getWardById(idProvince.value, idDistrict.value)">
+                <option>Chọn Quận/Huyện</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="idWard"></label>
+            </div>
+            <select asp-for="idWard">
+                <option>Chọn Phường/Xã</option>
+            </select>
+        </div>
+        <button class="btn-danger">Create</button>
+</div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function getAllProvinces() {
+        $.ajax({
+            url: '/User/GetProvinceAll',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    $('#idProvince').append(`<option value='${data[i].id}'>${data[i]._name}</option>`);
+                }
+            }
+        });
+    }
+    getAllProvinces();
+    function getDistrictById(id) {
+        $.ajax({
+            url: '/User/GetDistrictById/' + id,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $('#idDistrict').empty();
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    $('#idDistrict').append(`<option value='${data[i].id}'>${data[i]._name}</option>`);
+                }
+            }
+        });
+    }
+    function getWardById(provinceId, districtId) {
+        $.ajax({
+            url: `/User/GetWardById?provinceId=${provinceId}&districtId=${districtId}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                $('#idWard').empty();
+                for (let i = 0; i < data.length; i++) {
+                    console.log(data[i]);
+                    $('#idWard').append(`<option value='${data[i].id}'>${data[i]._name}</option>`);
+                }
+            }
+        });
+    }
+</script>

@@ -1,111 +1,27 @@
-﻿@model Customer
-
+﻿@model IEnumerable<ApplicationUser>
 @{
-    ViewData["Title"] = "User page";
-    var users = ViewBag.Users as IEnumerable<exercise.ViewModels.User>;
+    ViewBag.Title = "Show list customer";
 }
+<table class="table table-bordered table-hover mt-2">
+    <thead>
+        <tr>
+            <th>FullName</th>
+            <th>Sdt</th>
+            <th>Email</th>
 
-<div>
-    <h1 class="display-4">Đăng Kí Tài Khoản</h1>
-    <h2>Thông Tin Cá Nhân</h2>
-    <form action="/" method="post">
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="FullName"></label>
-            </div>
-            <div class="col-sm-10">
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="numberPhone"></label>
-            </div>
-            <div class="col-sm-10">
-                <input asp-for="numberPhone" class="form-control" />
-                <span asp-validation-for="numberPhone" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="Email"></label>
-            </div>
-            <div class="col-sm-10">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-        <h2>Mật Khẩu của bạn</h2>
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="Password"></label>
-            </div>
-            <div class="col-sm-10">
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="ConfirmPassword"></label>
-            </div>
-            <div class="col-sm-10">
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-        </div>
-        <h2>Thông tin địa chỉ</h2>
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="idProvince"></label>
-            </div>
-            <select asp-for="idProvince">
-
-                @if (users != null && users.Any())
-                {
-                    foreach (var user in users)
-                    {
-                        <option>@user.City</option>
-                    }
-                }
-
-            </select>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="idDistrict"></label>
-            </div>
-            <select asp-for="idDistrict">
-
-                @if (users != null && users.Any())
-                {
-                    foreach (var user in users)
-                    {
-                        <option value="@user.District">@user.District</option>
-                    }
-                }
-
-            </select>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-2">
-                <label asp-for="idWard"></label>
-            </div>
-            <select asp-for="idWard">
-
-                @if (users != null && users.Any())
-                {
-                    foreach (var user in users)
-                    {
-                        <option>@user.Ward</option>
-                    }
-                }
-
-            </select>
-        </div>
-
-    </form>
-</div>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.FullName</td>
+                    <td>@role.numberPhone</td>
+                    <td>@role.Email</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

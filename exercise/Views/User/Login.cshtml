@@ -1,0 +1,40 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login page";
+}
+
+<form enctype="multipart/form-data" asp-controller="User" asp-action="Login" method="post" class="mt-2">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Email"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        @*<h2>Mật Khẩu của bạn</h2>*@
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Password"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="RememberMe"></label>
+            </div>
+            <div class="col-sm-10">
+                <label class="form-check-label">
+                    <input type="checkbox" asp-for="RememberMe" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <button class="btn-danger">Login</button>
+    </div>
+</form>

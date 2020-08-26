@@ -26,8 +26,15 @@ using exercise.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "D:\module3\exercise\exercise\Views\_ViewImports.cshtml"
+using exercise.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1f02565c188bc0cf60de1bc120acef71a3608055", @"/Views/Error.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bff4a5d5034740ab60cc1656ccda162b15672fd0", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6bc4e5dfc211291586c00fade3068e4727d9f991", @"/Views/_ViewImports.cshtml")]
     public class Views_Error : global::Microsoft.AspNetCore.Mvc.RazorPages.Page
     {
         #pragma warning disable 1998

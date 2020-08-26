@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,20 +15,27 @@ namespace exercise.Models
         public string FullName { get; set; }
         [Display(Name = "Số điện thoại")]
         [Required]
+        [DataType(DataType.PhoneNumber)]
         public string numberPhone { get; set; }
+
         [Required]
-        //[RegularExpression(@"^([\w\.\-]+}@[\w\-]+)((\.(\w{2,3})+)$", ErrorMessage ="invalid email format")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        [Display(Name = "xác nhận mật khẩu")]
         public string ConfirmPassword { get; set; }
-        [Required]
         public string AvatarPath { get; set; }
+        [Required]
+        [Display(Name = "Quận/Huyện")]
         public int idDistrict { get; set; }
-        public string idProvince { get; set; }
-        public string idWard { get; set; }
+        [Required]
+        [Display(Name = "Tỉnh/Thành")]
+        public int idProvince { get; set; }
+        [Required]
+        [Display(Name = "Phường/xã")]
+        public int idWard { get; set; }
     }
 }

@@ -5,10 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200824074641_CreateCutomerTable.cs" />
+    <Compile Remove="Migrations\20200824074641_CreateCutomerTable.Designer.cs" />
+    <Compile Remove="Migrations\20200826034623_InitialIdentity.cs" />
+    <Compile Remove="Migrations\20200826034623_InitialIdentity.Designer.cs" />
+    <Compile Remove="Migrations\20200826035655_Initial Identity.cs" />
+    <Compile Remove="Migrations\20200826035655_Initial Identity.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Views\Customer\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using exercise.Models;
 using exercise.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,10 @@ namespace exercise.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         //SqlConnection connectionString = new SqlConnection(@"Data Source=hoang\\sqlexpress;Database=CustomerDatabase;Trusted_Connection=True");
 
-        public HomeController(UserManager<IdentityUser> userManager)
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
         }

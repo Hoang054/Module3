@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using exercise.Services;
 
 namespace exercise
 {
@@ -27,8 +28,10 @@ namespace exercise
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            //services.AddSingleton<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerService, CustomerService>();    
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CustomerDbConnection")));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,13 +52,13 @@ namespace exercise
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
 
-            app.UseRouting();
+            //app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseMvc(routers =>
             {
-                routers.MapRoute("default", "{controller=User}/{action=Index}/{id?}");
+                routers.MapRoute("default", "{controller=User}/{action=Create}/{id?}");
             });
             //app.UseEndpoints(endpoints =>
             //{
