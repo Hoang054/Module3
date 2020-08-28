@@ -58,7 +58,7 @@ namespace exercise
 
             app.UseMvc(routers =>
             {
-                routers.MapRoute("default", "{controller=User}/{action=Create}/{id?}");
+                routers.MapRoute("default", "{controller=User}/{action=Login}/{id?}");
             });
             //app.UseEndpoints(endpoints =>
             //{

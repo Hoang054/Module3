@@ -158,15 +158,15 @@ namespace exercise.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConfirmPassword")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -193,10 +193,6 @@ namespace exercise.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -226,10 +222,6 @@ namespace exercise.Migrations
                     b.Property<int>("idWard")
                         .HasColumnType("int");
 
-                    b.Property<string>("numberPhone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -245,22 +237,21 @@ namespace exercise.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b3c4b93-0c45-4adf-ba20-91ec237b0639",
+                            Id = "358d5dec-08f2-44b6-b5d8-ee3223590676",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6a926ce1-c5cb-4a32-9cb6-b75cab055edf",
-                            ConfirmPassword = "Qwerty!23",
+                            Address = "41/16 Lương Y",
+                            ConcurrencyStamp = "bb7dd2b4-209e-41e7-9097-ceb4d77b4873",
                             Email = "xuanhoang054@gmail.com",
                             EmailConfirmed = false,
                             FullName = "Hoang Tran",
                             LockoutEnabled = false,
-                            Password = "Qwerty!23",
+                            PhoneNumber = "0123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e015ffc6-895e-43ec-9f68-bdbd4534177b",
+                            SecurityStamp = "1259dac1-6e0b-49c0-958b-24dcd594a04d",
                             TwoFactorEnabled = false,
                             idDistrict = 1,
                             idProvince = 2,
-                            idWard = 3,
-                            numberPhone = "0123456789"
+                            idWard = 3
                         });
                 });
 

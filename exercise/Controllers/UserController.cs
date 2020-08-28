@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,15 @@ namespace exercise.Controllers
         private ICustomerService customerService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private AppDbContext context;
 
         public UserController(SignInManager<ApplicationUser> signInManager, ICustomerService customerService
-                                , UserManager<ApplicationUser> userManager)
+                                , UserManager<ApplicationUser> userManager, AppDbContext _context)
         {
             this.signInManager = signInManager;
             this.customerService = customerService;
             this.userManager = userManager;
+            context = _context;
         }
 
         [HttpGet]
@@ -60,6 +63,7 @@ namespace exercise.Controllers
             {
                 string query = "select * from districts where districts._province_id= @Id";
                 var district = connection.Query<District>(query, new { Id = id});
+
                 return Ok(district);
             }
         }
@@ -84,7 +88,7 @@ namespace exercise.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Create(ApplicationUser model)
+        public async Task<IActionResult> Create(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -93,12 +97,11 @@ namespace exercise.Controllers
                     Email = model.Email,
                     UserName = model.Email,
                     FullName = model.FullName,
-                    Password = model.Password,
-                    ConfirmPassword = model.ConfirmPassword,
                     numberPhone = model.numberPhone,
                     idProvince = model.idProvince,
                     idDistrict = model.idDistrict,
-                    idWard = model.idWard
+                    idWard = model.idWard,
+                    Address = model.Address
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -135,7 +138,7 @@ namespace exercise.Controllers
                                                                 lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Show", "User");
+                    return RedirectToAction("Index", "User");
                 }
                 else
                 {
@@ -148,5 +151,69 @@ namespace exercise.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public IActionResult List()
+        {
+            var users = userManager.Users;
+            var model = new List<UserViewModel>();
+            model = users.Select(r => new UserViewModel()
+            {
+                Address = r.Address,
+                Email = r.Email,
+                FullName = r.FullName,
+                numberPhone = r.numberPhone,
+                idProvince = r.idProvince,
+                idDistrict = r.idDistrict,
+                idWard = r.idWard
+            }).ToList();
+            foreach(UserViewModel applicationUser in model)
+            {
+                applicationUser.District = context.districts.Find(applicationUser.idDistrict);
+                applicationUser.Province = context.provinces.Find(applicationUser.idProvince);
+                applicationUser.Ward = context.wards.Find(applicationUser.idWard);
+            }
+            return View(model); 
+        }
+        public IActionResult GetList()
+        {
+            using (var connection = new SqlConnection("Server=hoang\\sqlexpress;Database=CustomerDatabase;Trusted_Connection=True"))
+            {
+                string query = "select * from AspNetUsers";
+                var district = connection.Query<Customer>(query);
+
+                return Ok(district);
+            }
+        }
+        //public IActionResult List2()
+        //{
+        //    District district = new District();
+        //    district._name = "sahdghsda";
+        //   context.districts.Add(district);
+        //    context.SaveChanges();
+
+        //    return Ok(null);
+        //}
+        //public async Task<ActionResult> List(string Sorting_Order)
+        //{
+        //    ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "Name_Description" : "";
+        //    ViewBag.SortingPhone = Sorting_Order == "Date_Enroll" ? "Date_Description" : "Date";
+        //    var customers = from cus in context.Customers select cus;
+        //    switch (Sorting_Order)
+        //    {
+        //        case "Name_Description":
+        //            customers = customers.OrderByDescending(cus => cus.FullName);
+        //            break;
+        //        case "Date_Enroll":
+        //            customers = customers.OrderBy(cus => cus.numberPhone);
+        //            break;
+        //        case "Date_Description":
+        //            customers = customers.OrderByDescending(cus => cus.Email);
+        //            break;
+        //        default:
+        //            customers = customers.OrderBy(cus => cus.FullName);
+        //            break;
+        //    }
+        //    return View(await customers.AsNoTracking().ToListAsync());
+        //}
     }
 }

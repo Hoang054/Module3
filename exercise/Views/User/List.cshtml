@@ -1,0 +1,86 @@
+﻿@model IEnumerable<UserViewModel>
+@{
+    ViewBag.Title = "Show list customer";
+}
+<table class="table table-bordered table-hover mt-2" id="demotable">
+    <thead>
+        <tr>
+            <th>
+                @*<a asp-action="list" asp-route-sortOrder="@ViewBag.SortingName">@Html.DisplayNameFor(model => model.FullName)</a>*@
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.numberPhone)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.Address)</th>
+            <th>@Html.DisplayNameFor(model => model.idProvince)</th>
+            <th>@Html.DisplayNameFor(model => model.idDistrict)</th>
+            <th>@Html.DisplayNameFor(model => model.idWard)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var row in Model)
+            {
+                <tr>
+                    <td>@row.FullName</td>
+                    <td>@row.numberPhone</td>
+                    <td>@row.Email</td>
+                    <td>@row.Address</td>
+                    <td>@row.Province._name</td>
+                    <td>@row.District._name</td>
+                    <td>@row.Ward._name</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"></link>
+@section scripts{ 
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#demotable').DataTable(
+            //{
+            //    "ajax": {
+            //        "url": "/User/GetList",
+            //        "type": "GET",
+            //        "datatype": "json"
+            //    },
+            //    "columns":[
+            //        { "data": "FullName" },
+            //        { "data": "numberPhone" },
+            //        { "data": "Email" },
+            //        { "data": "Address" },
+            //        { "data": "Province" },
+            //        { "data": "District" },
+            //        {"data": "Ward" }
+            //    ]
+            //}
+        );
+    });
+</script>
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function getAllProvinces() {
+            $.ajax({
+                url: '/User/GetProvinceAll',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    for (let i = 0; i < data.length; i++) {
+                        console.log(data[i]);
+                        if (data[i].id == '#idProvince')
+                        {
+                            $('#idProvince').append(`<option value='${data[i].id}'>${data[i]._name}</option>`);
+                        }
+                    }
+                }
+            });
+        }
+    </script>*@

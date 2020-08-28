@@ -9,33 +9,31 @@ namespace exercise.Models
 {
     public class Customer
     {
-        public int id { get; set; }
         [Required]
         [Display(Name = "Họ và tên")]
         public string FullName { get; set; }
         [Display(Name = "Số điện thoại")]
         [Required]
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression("(09|01[2|6|8|9])+([0-9]{8})", ErrorMessage = "Số điện thoại không đúng")]
         public string numberPhone { get; set; }
-
+        [Required]
+        //[RegularExpression(@"^([\w\.\-]+}@[\w\-]+)((\.(\w{2,3})+)$", ErrorMessage ="invalid email format")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "invalid email format")]
+        public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
-        [Display(Name = "xác nhận mật khẩu")]
         public string ConfirmPassword { get; set; }
+        [Required]
         public string AvatarPath { get; set; }
-        [Required]
-        [Display(Name = "Quận/Huyện")]
         public int idDistrict { get; set; }
-        [Required]
-        [Display(Name = "Tỉnh/Thành")]
         public int idProvince { get; set; }
-        [Required]
-        [Display(Name = "Phường/xã")]
         public int idWard { get; set; }
+        [Required]
+        [Display(Name = "Địa Chỉ")]
+        public string Address { get; set; }
     }
 }

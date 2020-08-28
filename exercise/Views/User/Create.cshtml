@@ -1,91 +1,112 @@
-﻿@model ApplicationUser
+﻿@model UserViewModel
 @{
     ViewData["Title"] = "User page";
-    var provinces = ViewBag.Provinces as IEnumerable<Province>;
-    var districts = ViewBag.Districts as IEnumerable<District>;
-    var wards = ViewBag.Wards as IEnumerable<Ward>;
+    //var provinces = ViewBag.Provinces as IEnumerable<Province>;
+    //var districts = ViewBag.Districts as IEnumerable<District>;
+    //var wards = ViewBag.Wards as IEnumerable<Ward>;
 }
-
+@inject AppDbContext context
 
 <form enctype="multipart/form-data" asp-controller="User" asp-action="Create" method="post" class="mt-2">
     <div>
-        <h1 class="display-4">Đăng Kí Tài Khoản</h1>
-        <h2>Thông Tin Cá Nhân</h2>
+        <h4>Đăng Kí Tài Khoản</h4>
+        <h5>Thông Tin Cá Nhân</h5>
+        @*<div style="width:100%; height:1px; background-color:darkgray"></div>*@
+        <hr>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="FullName"></label>
+                <label asp-for="FullName" class="font-weight-bold"></label>
             </div>
             <div class="col-sm-10">
-                <input asp-for="FullName" class="form-control" />
+                <input asp-for="FullName" class="form-control" placeholder="Họ và tên" />
                 <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="numberPhone"></label>
+                <label asp-for="numberPhone" class="font-weight-bold"></label>
             </div>
             <div class="col-sm-10">
-                <input asp-for="numberPhone" class="form-control" />
+                <input asp-for="numberPhone" class="form-control" placeholder="Số điện thoại" />
                 <span asp-validation-for="numberPhone" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="Email"></label>
+                <label asp-for="Email" class="font-weight-bold"></label>
             </div>
             <div class="col-sm-10">
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" placeholder="Email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
-        <h2>Mật Khẩu của bạn</h2>
+        <h5>Mật Khẩu của bạn</h5>
+        <hr>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="Password"></label>
+                <label asp-for="Password" class="font-weight-bold"></label>
             </div>
             <div class="col-sm-10">
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" placeholder="Mật khẩu" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="ConfirmPassword"></label>
+                <label asp-for="ConfirmPassword" class="font-weight-bold"></label>
             </div>
             <div class="col-sm-10">
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Gõ lại mật khẩu" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
         </div>
-        <h2>Thông tin địa chỉ</h2>
+        <h5>Thông tin địa chỉ</h5>
+        <hr>
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="idProvince"></label>
+                <label asp-for="idProvince" class="font-weight-bold"></label>
             </div>
-            <select asp-for="idProvince" onclick="getDistrictById(this.value)">
-                <option>Chọn Tỉnh/ Thành Phố</option>
-            </select>
+            <div class="col-sm-10">
+                <select asp-for="idProvince" onchange="getDistrictById(this.value)" class="form-control need-select2 hasCustomSelect">
+                    <option>Chọn Tỉnh/ Thành Phố</option>
+                </select>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="idDistrict"></label>
+                <label asp-for="idDistrict" class="font-weight-bold"></label>
             </div>
-            <select asp-for="idDistrict" onclick="getWardById(idProvince.value, idDistrict.value)">
-                <option>Chọn Quận/Huyện</option>
-            </select>
+            <div class="col-sm-10">
+                <select asp-for="idDistrict" onchange="getWardById(idProvince.value, idDistrict.value)" class="form-control need-select2 hasCustomSelect">
+                    <option>Chọn Quận/Huyện</option>
+                </select>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-sm-2">
-                <label asp-for="idWard"></label>
+                <label asp-for="idWard" class="font-weight-bold"></label>
             </div>
-            <select asp-for="idWard">
-                <option>Chọn Phường/Xã</option>
-            </select>
+            <div class="col-sm-10">
+                <select asp-for="idWard" class="form-control need-select2 hasCustomSelect">
+                    <option>Chọn Phường/Xã</option>
+                </select>
+            </div>
         </div>
-        <button class="btn-danger">Create</button>
-</div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Address" class="font-weight-bold"></label>
+            </div>
+            <div class="col-sm-10">
+                <input asp-for="Address" class="form-control" placeholder="Số nhà, tên đường" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    <div class="text-right">
+        <button class="btn btn-primary">Đăng Ký</button>
+        </div>
+    </div>
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

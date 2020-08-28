@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using exercise.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,11 +30,10 @@ namespace exercise.Models
                     Email = "xuanhoang054@gmail.com",
                     FullName = "Hoang Tran",
                     numberPhone = "0123456789",
-                    Password = "Qwerty!23",
-                    ConfirmPassword = "Qwerty!23",
                     idDistrict = 1,
                     idProvince = 2,
-                    idWard = 3
+                    idWard = 3,
+                    Address = "41/16 Lương Y"
                 }
             );
         }
